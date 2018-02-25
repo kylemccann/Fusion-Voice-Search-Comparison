@@ -1,0 +1,132 @@
+h1 {
+  color: #369;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+}
+
+.box{
+  width: 100%;
+  margin: 0 auto;
+  /*border: 3px solid green;*/
+
+}
+
+#leftcolumn, #rightcolumn {
+  border: 1px solid white;
+  float: left;
+  min-height: 60px;
+  color: white;
+}
+#leftcolumn {
+  width: 80%;
+  /*background-color: #111;*/
+}
+#rightcolumn {
+  width: 15%;
+  /*background-color: #777;*/
+}
+
+.listdemoBasicUsage md-divider {
+  margin-top: 15px;
+  margin-bottom: 0; }
+
+.search-box{
+  width: 99%;
+  /*padding-top: 3%;*/
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+  /*border: 3px solid blue;*/
+}
+
+.search-box input#search{
+  width: 100%;
+  height: 50px;
+  background: #2b303b;
+  border: none;
+  font-size: 10pt;
+  color: #63717f;
+  padding-left: 45px;
+  -webkit-border-radius: 8px; /* Pad the search query */
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+
+.search-box input#search::-webkit-input-placeholder {
+  color: #65737e;
+}
+
+.search-box input#search:-moz-placeholder { /* Firefox 18- */
+  color: #65737e;
+}
+
+.search-box input#search::-moz-placeholder {  /* Firefox 19+ */
+  color: #65737e;
+}
+
+.search-box input#search:-ms-input-placeholder {
+  color: #65737e;
+}
+
+.search-box .icon{
+  position: absolute;
+  top: 50%;
+  margin-left: 17px;
+  margin-top: 17px;
+  z-index: 1;
+  color: #4f5b66;
+}
+
+
+/* Voice record button */
+
+.voice-searchIcon-container{
+  margin: auto;
+  /*position: relative;*/
+  float: left;
+  /*border: 3px solid red;*/
+  width: 10%;; height: 10%;
+}
+.gn{
+  position:relative;
+  /*margin: 5% auto;*/
+  background-color:#FE2222;
+  border-radius:50%;
+  width:3.5em; height:3.5em;
+}
+:before, :after{
+  content:'';
+  position:absolute;
+  background-color:#fff;
+}
+.gn:after{
+  top:30%; left:43%;
+  height:15%; width:14%;
+  border-top-left-radius:50%;
+  border-top-right-radius:50%;
+}
+.gn:before{
+  top:40%; left:43%;
+  height:15%; width:14%;
+  border-bottom-left-radius:50%;
+  border-bottom-right-radius:50%;
+}
+.mc{
+  position:absolute;
+  top:55%; left:37%;
+  height:24%;
+  width:26.5%;
+  overflow:hidden;
+}
+.mc:before{
+  bottom:45%;
+  width:100%; height:100%;
+  box-sizing:border-box;
+  border-radius:60%;
+  border:0.4em solid #fff;
+  background:none;
+}
+.mc:after{
+  top:60%; left:40%;
+  width:20%; height:20%;
+}

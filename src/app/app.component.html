@@ -1,0 +1,27 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="box">
+  <div id="leftcolumn">
+  <div class="search-box">
+    <span class="icon"><i class="fa fa-search"></i></span>
+    <input type="search" id="search" placeholder="Search..." />
+  </div>
+  </div>
+
+<div id="rightcolumn">
+<div class="voice-searchIcon-container">
+<div class="gn"><div class="mc"></div></div>
+</div>
+</div>
+</div>
+
+
+
+
+<ul class="list-group">
+  <li *ngFor="let r of resp" class="list-group-item">
+    <b>{{r.id}}</b>
+    <p>{{r.question_txt}}</p>
+
+  </li>
+</ul>
+
