@@ -1,27 +1,37 @@
-<!--The content below is only a placeholder and can be replaced.-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.4/angular-sanitize.min.js"></script>
+<script src="/bower_components/angular-read-more/readmore.min.js"></script>
+
+<div class="wrapper">
 <div class="box">
   <div id="leftcolumn">
   <div class="search-box">
     <span class="icon"><i class="fa fa-search"></i></span>
-    <input type="search" id="search" placeholder="Search..." />
+    <input type="search" id="search" placeholder="Search..." #search (keyup.enter)="onKeyUp(search.value)" />
   </div>
   </div>
 
 <div id="rightcolumn">
 <div class="voice-searchIcon-container">
-<div class="gn"><div class="mc"></div></div>
+<div class="start-recording" (click)="recordPress()"><div class="mc"></div></div>
 </div>
 </div>
 </div>
 
 
 
+<div class="results">
 
-<ul class="list-group">
-  <li *ngFor="let r of resp" class="list-group-item">
-    <b>{{r.id}}</b>
-    <p>{{r.question_txt}}</p>
 
-  </li>
-</ul>
+  <P>{{noResults}}</P>
+<div class="list-group">
+  <div *ngFor="let r of resp" class="list-group-item">
+    <b class="questionTitle">{{r.id}}</b>
 
+    <b>Question</b>
+    <p data-dd-collapse-text="100" class="questionText">{{r.question_txt}}</p>
+
+  </div>
+</div>
+</div>
+
+</div>
