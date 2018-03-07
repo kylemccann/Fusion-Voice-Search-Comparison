@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild, AfterViewInit, ElementRef} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {RecordRTCComponent} from './record-rtc/record-rtc.component';
-const RecordRTC = require('recordrtc/RecordRTC.js');
-
+import RecordRTC = require('recordrtc');
+import StereoAudioRecorder = require('recordrtc/dev/StereoAudioRecorder.js');
+import Recorder = require('recorder-js');
 
 @Component({
   selector: 'app-root',
@@ -15,11 +15,14 @@ export class AppComponent {
   title = 'Fusion Google Voice Search Demo';
   posts: JSON;
   resp: any;
+  googleResponse: any;
   noResults: string;
   recordStatus: boolean;
   recordRTC: any;
   app = this;
   stream: any;
+  recordedBlob: any;
+  public search : string;
 
   private url = 'http://localhost:8765/api/v1/';
 
@@ -46,12 +49,16 @@ export class AppComponent {
 
   ngAfterViewInit() {
     this.recordStatus = true;
+  this.search = 'Enter a search term';
+
+    setTimeout(() => { if (this.search == 'Enter a search term') {
+      this.search = 'or click the record button to search via voice :)';
+    } }, 3000);
+
 
   }
 
 
-
-  onKeyDown
 
   recordPress(this) {
 
@@ -81,17 +88,19 @@ export class AppComponent {
     } else {
       this.recordStatus = false;
       this.stopRecording(function() {
-         let blob = this.getBlob();
+        let blob = this.getBlob();
 
-          let file = new File([blob], 'filename.webm', {
-                  type: 'video/webm'
-              });
+        let file = new File([blob], 'file.wav', {
+          type: 'audio/wav'
+        });
+        console.log('FILE' + file);
 
-           let formData = new FormData();
-           formData.append('file', file); // upload "File" object rather than a "Blob"
-           // this.uploadToServer(formData);
-       });
+        let formData = new FormData();
+        formData.append('file', file); // upload "File" object rather than a "Blob"
+        // this.uploadToServer(formData);
+      });
       this.download();
+      // this.uploadToServer();
     }
   }
 
@@ -103,91 +112,8 @@ export class AppComponent {
   }
 
   getResults(searchTerm)
-      {
-        this.http.get(this.url + 'query-pipelines/lucidfind-default/collections/lucidfind/select?q=' + searchTerm + '&wt=json')
-          .subscribe(data => {
-            this.posts = data as JSON;
-            if (data.hasOwnProperty('response')) {
-              this.resp = data.response.docs;
-            } else {
-              console.log('No Response found');
-            }
-
-
-            console.log(data);
-            console.log(this.resp);
-
-            if (this.resp.length === 0) {
-              console.log('NADA');
-              this.noResults = 'Could not find any results, try reforming your query.';
-            }
-
-          });
-      }
-
-  toggleControls() {
-    let audio: HTMLAudioElement = this.audio.nativeElement;
-    audio.muted = !audio.muted;
-    audio.controls = !audio.controls;
-    audio.autoplay = !audio.autoplay;
-  }
-
-
-
-  errorCallback() {
-    //handle error here
-  }
-
-
-  successCallback(stream: MediaStream) {
-
-    var options = {
-      mimeType: 'audio/webm', // or video/webm\;codecs=h264 or video/webm\;codecs=vp9
-      bitsPerSecond: 16000 // if this line is provided, skip above two
-    };
-
-      // this.stream = stream;
-
-    this.recordRTC = RecordRTC(stream, options);
-    this.recordRTC.startRecording();
-    // let audio: HTMLAudioElement = this.audio.nativeElement;
-    // audio.src = window.URL.createObjectURL(stream);
-    // this.toggleControls();
-  }
-
-  startRecording() {
-    let mediaConstraints = {
-      audio: {
-        mandatory: {
-        }
-      }, audio: true
-    };
-
-    navigator.mediaDevices
-      .getUserMedia(mediaConstraints)
-      .then(this.successCallback.bind(this), this.errorCallback.bind(this));
-
-
-  }
-
-
-
-  stopRecording() {
-    let recordRTC = this.recordRTC;
-    recordRTC.stopRecording(this.processVideo.bind(this));
-    let stream = this.stream;
-    stream.getAudioTracks().forEach(track => track.stop());
-  }
-
-  download() {
-    this.recordRTC.save('audio.webm');
-    this.recordRTC.writeToDisk();
-
-  }
-
-  uploadToServer(blob) {
-    let uploadLocation = '';
-    this.http.post(uploadLocation, blob)
+  {
+    this.http.get(this.url + 'query-pipelines/lucidfind-default/collections/lucidfind/select?q=' + searchTerm + '&wt=json')
       .subscribe(data => {
         this.posts = data as JSON;
         if (data.hasOwnProperty('response')) {
@@ -208,16 +134,118 @@ export class AppComponent {
       });
   }
 
+  toggleControls() {
+    let audio: HTMLAudioElement = this.audio.nativeElement;
+    audio.muted = !audio.muted;
+    audio.controls = !audio.controls;
+    audio.autoplay = !audio.autoplay;
+  }
+
+
+
+  errorCallback() {
+    //handle error here
+  }
+
+
+  successCallback(stream: MediaStream) {
+
+    var options = {
+      type: 'audio',
+      // recorderType: StereoAudioRecorder,
+      audio: 'audio/wav',
+      mimeType: 'audio/wav',
+      desiredSampRate: 16000
+    };
+    this.recordRTC = RecordRTC(stream, options);
+    this.recordRTC.startRecording();
+    // let audio: HTMLAudioElement = this.audio.nativeElement;
+    // audio.src = window.URL.createObjectURL(stream);
+    // this.toggleControls();
+  }
+
+  startRecording() {
+    let mediaConstraints = {
+       audio: true,
+      mimeType: 'audio/wav'
+    };
+
+    navigator.mediaDevices
+      .getUserMedia(mediaConstraints)
+      .then(this.successCallback.bind(this), this.errorCallback.bind(this));
+
+
+  }
+
+
+
+  stopRecording() {
+    let recordRTC = this.recordRTC;
+    recordRTC.stopRecording(this.processVideo.bind(this));
+
+    // stream.getAudioTracks().forEach(track => track.stop());
+    // this.download();
+  }
+
+  download() {
+    // this.recordRTC.save('audio.wav');
+    // this.recordRTC.writeToDisk();
+
+  }
+
+
+
+  uploadToServer(blob) {
+    let uploadLocation = this.url + 'query-pipelines/lucidfind-voicesearch/collections/lucidfind/select?wt=json';
+    let body = {'data': blob};
+    let header = {headers: {
+        'Content-Type': 'audio/wav'
+      }};
+    this.http.post(uploadLocation, blob, {headers: {'Content-Type': 'audio/wav'}} )
+      .subscribe(data => {
+        this.posts = data as JSON;
+
+        console.log('posts' + this.posts)
+        if (data.hasOwnProperty('response')) {
+          console.log('Response Found');
+          this.resp = data.response.docs;
+        } else {
+          console.log('No Response found');
+        }
+
+        if (data.hasOwnProperty('fusion')) {
+          this.googleResponse = data.fusion.q;
+          this.search = this.googleResponse;
+          console.log('FUSION ' + this.googleResponse);
+        } else {
+          console.log('No Response found');
+        }
+
+
+
+        console.log(data);
+        console.log(this.resp);
+
+        if (this.resp.length === 0) {
+          console.log('NADA');
+          this.noResults = 'Could not find any results, try reforming your query.';
+        }
+
+      });
+  }
+
   processVideo(audioVideoWebMURL) {
     // let audio: HTMLVideoElement = this.audio.nativeElement;
     let recordRTC = this.recordRTC;
     // audio.src = audioVideoWebMURL;
     // this.toggleControls();
-    var recordedBlob = recordRTC.getBlob();
-    recordRTC.getDataURL(function (dataURL) { });
-    console.log(recordedBlob);
+     this.recordedBlob = recordRTC.getBlob();
+     this.uploadToServer(recordRTC.blob);
+    // recordRTC.getDataURL(function (dataURL) { window.open(dataURL);
+    // console.log(dataURL);
+    // });
+    console.log(this.recordedBlob);
     console.log(audioVideoWebMURL);
   }
 
 }
-

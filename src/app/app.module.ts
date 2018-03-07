@@ -1,24 +1,30 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RecordRTCComponent } from './record-rtc/record-rtc.component';
-
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 
 
+// import {Recorder} from 'recorder-js';
+// import {RecordRTC} from 'recordrtc';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
+
+
+import {FormsModule} from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RecordRTCComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
+    // Recorder,
+    // RecordRTC
   ],
   providers: [],
   bootstrap: [AppComponent]
