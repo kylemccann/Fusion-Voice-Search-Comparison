@@ -2,16 +2,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
-
-
-// import {Recorder} from 'recorder-js';
-// import {RecordRTC} from 'recordrtc';
-
-
-
-
-
 import {FormsModule} from '@angular/forms';
+import {
+  MatButtonModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatCardModule
+} from '@angular/material';
+
+
+
+
+
+
 
 
 
@@ -22,7 +26,8 @@ import {FormsModule} from '@angular/forms';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatToolbarModule
     // Recorder,
     // RecordRTC
   ],

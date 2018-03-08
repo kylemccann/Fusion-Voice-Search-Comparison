@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild, AfterViewInit, ElementRef} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import RecordRTC = require('recordrtc');
-import StereoAudioRecorder = require('recordrtc/dev/StereoAudioRecorder.js');
-import Recorder = require('recorder-js');
+import * as RecordRTC from '../assets/recordrtc';
+// import StereoAudioRecorder = require('recordrtc/dev/StereoAudioRecorder.js');
+// import Recorder = require('recorder-js');
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ import Recorder = require('recorder-js');
 
 export class AppComponent {
   title = 'Fusion Google Voice Search Demo';
-  posts: JSON;
+  d: any;
   resp: any;
   googleResponse: any;
   noResults: string;
@@ -22,7 +22,15 @@ export class AppComponent {
   app = this;
   stream: any;
   recordedBlob: any;
-  public search : string;
+  public search: string;
+  numberOfResults: number;
+  public searchHistory = [];
+
+
+  // Style button dependent on status
+  recordBtnColour: string;
+  recordBtnRadius: any;
+
 
   private url = 'http://localhost:8765/api/v1/';
 
@@ -34,24 +42,32 @@ export class AppComponent {
 
   }
 
-  onKeyDown(searchTerm) {
-    this.http.get(this.url + 'query-pipelines/lucidfind-default/collections/lucidfind/select?q='+ searchTerm +'&wt=json')
+  onKeyUp(searchTerm) {
+    this.noResults = '';
+    console.log(searchTerm);
+    this.addSearchHistory(searchTerm);
+    this.http.get(this.url + 'query-pipelines/lucidfind-default/collections/lucidfind/select?q=' + searchTerm + '&wt=json')
       .subscribe(data => {
-        this.posts = data as JSON;
+        this.d = data as JSON;
         if (data.hasOwnProperty('response')) {
-          this.resp = data.response.docs;
+          this.resp = this.d.response.docs as JSON;
+          this.numberOfResults = this.d.response.numFound;
         }
         console.log(data);
         console.log(this.resp);
 
       });
+    console.log(this.numberOfResults);
+    console.log('Search History: ' + this.searchHistory);
   }
 
   ngAfterViewInit() {
     this.recordStatus = true;
+    this.setRecordNotActive();
+    this.numberOfResults =0;
   this.search = 'Enter a search term';
 
-    setTimeout(() => { if (this.search == 'Enter a search term') {
+    setTimeout(() => { if (this.search === 'Enter a search term') {
       this.search = 'or click the record button to search via voice :)';
     } }, 3000);
 
@@ -63,14 +79,16 @@ export class AppComponent {
   recordPress(this) {
 
     if (this.recordStatus === true) {
-      console.log('Helllooooo');
+
+      console.log('Record Button pressed');
+      this.setRecordActive();
 
       let constraints = {audio: true};
       navigator.mediaDevices.getUserMedia(constraints)
         .then(function(stream) {
-          var videoTracks = stream.getVideoTracks();
+          var audioTracks = stream.getAudioTracks()
           console.log('Got stream with constraints:', constraints);
-          console.log('Using video device: ' + AudioTrack[0].label);
+          console.log('Using Audio device: ' + AudioTrack[0].label);
           this.stream = stream;
 
           stream.oninactive = function() {
@@ -85,8 +103,8 @@ export class AppComponent {
 
       this.startRecording();
       this.recordStatus = false;
-    } else {
-      this.recordStatus = false;
+    } else if (this.recordStatus === false) {
+      this.setRecordNotActive();
       this.stopRecording(function() {
         let blob = this.getBlob();
 
@@ -99,25 +117,22 @@ export class AppComponent {
         formData.append('file', file); // upload "File" object rather than a "Blob"
         // this.uploadToServer(formData);
       });
-      this.download();
-      // this.uploadToServer();
+      this.clearUpForNextRecord();
+      // stream.close();
+
+      this.recordStatus = true;
     }
   }
 
 
-  onKeyUp(searchTerm) {
-    this.noResults = '';
-    console.log(searchTerm);
-    this.getResults(searchTerm);
-  }
-
   getResults(searchTerm)
   {
+    this.searchHistory.push(searchTerm);
     this.http.get(this.url + 'query-pipelines/lucidfind-default/collections/lucidfind/select?q=' + searchTerm + '&wt=json')
       .subscribe(data => {
-        this.posts = data as JSON;
+        this.d = data as JSON;
         if (data.hasOwnProperty('response')) {
-          this.resp = data.response.docs;
+          this.resp = this.d.response.docs;
         } else {
           console.log('No Response found');
         }
@@ -155,7 +170,9 @@ export class AppComponent {
       // recorderType: StereoAudioRecorder,
       audio: 'audio/wav',
       mimeType: 'audio/wav',
-      desiredSampRate: 16000
+      numberOfChannels: 1,
+      desiredSampRate: 16000,
+      checkForInactiveTracks: true
     };
     this.recordRTC = RecordRTC(stream, options);
     this.recordRTC.startRecording();
@@ -187,11 +204,6 @@ export class AppComponent {
     // this.download();
   }
 
-  download() {
-    // this.recordRTC.save('audio.wav');
-    // this.recordRTC.writeToDisk();
-
-  }
 
 
 
@@ -203,18 +215,19 @@ export class AppComponent {
       }};
     this.http.post(uploadLocation, blob, {headers: {'Content-Type': 'audio/wav'}} )
       .subscribe(data => {
-        this.posts = data as JSON;
-
-        console.log('posts' + this.posts)
-        if (data.hasOwnProperty('response')) {
+        this.d = data as JSON;
+        let d = this.d;
+        console.log('d' + this.d)
+        if (d.hasOwnProperty('response')) {
           console.log('Response Found');
-          this.resp = data.response.docs;
+          this.resp = d.response.docs;
         } else {
           console.log('No Response found');
         }
 
-        if (data.hasOwnProperty('fusion')) {
-          this.googleResponse = data.fusion.q;
+        if (d.hasOwnProperty('fusion')) {
+          this.googleResponse = d.fusion.q;
+          this.searchHistory.push(this.googleResponse);
           this.search = this.googleResponse;
           console.log('FUSION ' + this.googleResponse);
         } else {
@@ -241,11 +254,49 @@ export class AppComponent {
     // this.toggleControls();
      this.recordedBlob = recordRTC.getBlob();
      this.uploadToServer(recordRTC.blob);
+
+
     // recordRTC.getDataURL(function (dataURL) { window.open(dataURL);
     // console.log(dataURL);
     // });
     console.log(this.recordedBlob);
     console.log(audioVideoWebMURL);
+  }
+
+  clearUpForNextRecord(){
+    // this.recordRTC = null;
+    this.recordRTC.clearRecordedData();
+    // this.stream.close();
+    // this.stream = null;
+  }
+
+  getRecordColour() {
+    return this.recordBtnColour;
+  }
+
+  getRecordBtnRadius() {
+    return this.recordBtnRadius;
+  }
+
+  setRecordActive() {
+    this.recordBtnColour = 'green';
+    this.recordBtnRadius = '10%';
+  }
+
+  setRecordNotActive() {
+    this.recordBtnColour = 'red';
+    this.recordBtnRadius = '50%';
+  }
+
+  addSearchHistory(searchTerm){
+    let s = this.searchHistory;
+   let size = this.searchHistory.length;
+
+   if (size === 5) {
+      s.shift();
+   }
+
+   s.push(searchTerm);
   }
 
 }
