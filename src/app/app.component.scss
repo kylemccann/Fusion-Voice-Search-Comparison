@@ -20,7 +20,7 @@ html {background-color: rgba(219, 219, 219, 0.54);}
 .wrapper{
   margin: 0;
   height: 100vh;
-  width: initial;
+  width: 100vw;
 
 }
 
@@ -31,17 +31,18 @@ html {background-color: rgba(219, 219, 219, 0.54);}
   top: 0;
   left: 0;
   color: white;
+
   background-color: #008dfd;
 }
 
 .box{
-  width: 99%;
+  width: 100%;
 }
 
 #leftcolumn, #rightcolumn {
-  /*border: 1px solid white;*/
+  ///*border: 1px solid white;*/
   float: left;
-  height: 250vw;
+  height: 100vh;
   color: white;
 }
 
@@ -82,7 +83,6 @@ html {background-color: rgba(219, 219, 219, 0.54);}
   .search-box {
     position: sticky; top:0;
     padding-top: 0.5%;
-    padding-left: 2%;
     width: 99%;
     vertical-align: middle;
     white-space: nowrap;
@@ -169,44 +169,30 @@ html {background-color: rgba(219, 219, 219, 0.54);}
 
 @media screen and (min-width: 601px) {
   .voice-searchIcon-container {
-    position: sticky; top:0;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 2.5%;
-    vertical-align: top;
 
-
-    /*float: left;*/
-    /*border: 3px solid red;*/
-    width: 98%;;
-    height: 8%;
-
+    margin-top: 10%;
+    position: absolute; left: 50%;
   }
 }
 
 
 @media screen and (max-width: 600px) {
   .voice-searchIcon-container {
-    position: sticky; top:0;
-    padding-top: 0.5%;
-    margin: 0 auto;
+    margin: 3%;
+    height: 10px;
 
-    /*vertical-align: top;*/
-    /*position: relative;*/
-    /*float: left;*/
-    /*border: 3px solid red;*/
-    width: 98%;;
-    height: 9%;
-
+    padding-top: 1%;
+    padding-bottom: 10%;
+    position: absolute; left: 50%;
   }
 }
 .start-recording{
-  position: sticky; top:0;
+  position: static;
   /*vertical-align: middle;*/
   /*margin: 5% auto;*/
   /*background-color:#FE2222;*/
   /*border-radius:50%;*/
-  width:3.5em; height:3.5em;
+  width:4.5em; height:4.5em;
 }
 
 :before, :after{
@@ -339,18 +325,16 @@ background-color: #f3f3f3;
     justify-content: space-between;
   }
 
+@media screen and (min-width: 600px) {
+  .mat-raised-button {
+    padding: 1%;
+  }
+}
 
 
 
-center {
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
 
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-
-  align-items: center;
-
+.center {
+  flex: 1 1 auto;
+  text-align: center;
 }

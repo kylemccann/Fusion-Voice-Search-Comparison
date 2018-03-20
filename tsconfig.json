@@ -9,6 +9,7 @@
     "experimentalDecorators": true,
     "target": "es5",
     "allowJs": true,
+    "skipLibCheck": true,
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -16,5 +17,13 @@
       "es2017",
       "dom"
     ]
-  }
+
+  },
+  "exclude": [
+    "node_modules",
+    "./node_modules/*",
+    "**/*.spec.ts",
+    "./node_modules/typescript/*"
+
+  ]
 }
