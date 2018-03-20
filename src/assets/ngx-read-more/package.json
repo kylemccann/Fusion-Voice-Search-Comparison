@@ -1,0 +1,66 @@
+{
+  "_from": "ngx-read-more",
+  "_id": "ngx-read-more@1.0.0",
+  "_inBundle": false,
+  "_integrity": "sha1-4S0kX6OieD/Fvnd2YVkAE4Kt2eQ=",
+  "_location": "/ngx-read-more",
+  "_phantomChildren": {
+    "tslib": "1.9.0"
+  },
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "ngx-read-more",
+    "name": "ngx-read-more",
+    "escapedName": "ngx-read-more",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ngx-read-more/-/ngx-read-more-1.0.0.tgz",
+  "_shasum": "e12d245fa3a2783fc5be77766159001382add9e4",
+  "_spec": "ngx-read-more",
+  "_where": "/Users/kylemccann/Development/fusion-voice-search-demo",
+  "author": {
+    "name": "Oneia"
+  },
+  "bugs": {
+    "url": "https://github.com/Oneia/read-more-angular2/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@angular/core": "^4.0.2"
+  },
+  "deprecated": false,
+  "description": "toogle text more\\less",
+  "devDependencies": {
+    "typescript": "^2.2.2"
+  },
+  "homepage": "https://github.com/Oneia/read-more-angular2#readme",
+  "keywords": [
+    "angular2",
+    "ngx",
+    "ng2",
+    "toogle",
+    "text",
+    "less",
+    "read",
+    "more"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "ngx-read-more",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oneia/read-more-angular2.git"
+  },
+  "scripts": {
+    "prepublish": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}

@@ -47,25 +47,25 @@ html {background-color: rgba(219, 219, 219, 0.54);}
 
 @media screen and (min-width: 600px) {
   #leftcolumn {
-    width: 80%;
+    width: 50%;
     /*background-color: #111;*/
   }
 
   #rightcolumn {
-    width: 20%;
+    width: 50%;
     /*background-color: #777;*/
   }
 }
 
 @media screen and (max-width: 601px) {
   #leftcolumn {
-    width: 80%;
+    width: 50%;
     padding-top: 8%;
     /*background-color: #111;*/
   }
 
   #rightcolumn {
-    width: 20%;
+    width: 50%;
     padding-top: 8%;
     /*background-color: #777;*/
   }
@@ -82,8 +82,8 @@ html {background-color: rgba(219, 219, 219, 0.54);}
   .search-box {
     position: sticky; top:0;
     padding-top: 0.5%;
-    padding-left: 40%;
-    width: 70%;
+    padding-left: 2%;
+    width: 99%;
     vertical-align: middle;
     white-space: nowrap;
     /*border: 3px solid blue;*/
@@ -170,13 +170,15 @@ html {background-color: rgba(219, 219, 219, 0.54);}
 @media screen and (min-width: 601px) {
   .voice-searchIcon-container {
     position: sticky; top:0;
-    padding-top: 0.5%;
-    position: -webkit-sticky;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 2.5%;
     vertical-align: top;
-    margin: auto;
+
+
     /*float: left;*/
     /*border: 3px solid red;*/
-    width: 8%;;
+    width: 98%;;
     height: 8%;
 
   }
@@ -187,13 +189,13 @@ html {background-color: rgba(219, 219, 219, 0.54);}
   .voice-searchIcon-container {
     position: sticky; top:0;
     padding-top: 0.5%;
-    position: -webkit-sticky;
-    padding-left: 9%;
+    margin: 0 auto;
+
     /*vertical-align: top;*/
     /*position: relative;*/
     /*float: left;*/
     /*border: 3px solid red;*/
-    width: 9%;;
+    width: 98%;;
     height: 9%;
 
   }
@@ -315,16 +317,14 @@ background-color: #f3f3f3;
 
 @media screen and (max-width: 600px) {
 
+  .searchHistoryItem {
+    position: absolute;
+    visibility: hidden;
+    margin: 3%;
+    border-radius: 9%;
+    text-align: center;
 
-.searchHistoryItem{
-  position: absolute;
-  visibility: hidden;
-  margin: 3%;
-  border-radius: 9%;
-  text-align: center;
-
-}
-
+  }
 
   #recentSearchesHeader {
     position: absolute;
@@ -333,8 +333,24 @@ background-color: #f3f3f3;
     padding-left: 25%;
 
   }
+}
 
   mat-toolbar-row {
     justify-content: space-between;
   }
+
+
+
+
+center {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+
+  align-items: center;
+
 }
