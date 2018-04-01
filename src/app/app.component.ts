@@ -345,12 +345,7 @@ export class AppComponent {
       app.nameOfApiB = 'IBM';
       app.searchB = this.ibmResponse;
       app.respB = this.ibmDocuments;
-      app.respB = app.respB.accepted_answer_txt.forEach(element => {
 
-          var n = element.indexOf('share|improve');
-          console.log('Found it: ' + n);
-          element = element.substring(0, n);
-      });
       app.numberOfResultsB = this.ibmDocuments.length;
       app.searchHistoryB.push(this.ibmResponse);
 

@@ -125,29 +125,20 @@
           <!--<b class="questionTitle">{{r.q_title}}</b>-->
 
           <!--<b>Question</b>-->
-          <p #qatextContent id="read-more1">
+            <mat-card-content>
+          <p>
             <b> Question: </b> {{r.question_txt}}
           </p>
-          <!--<div class="read-more-link">-->
-            <!--<a readMore [readMore-length]="130" [readMore-element]="qatextContent">-->
-              <!--<span class="less">Less <i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
-              <!--<span class="more">More <i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
-            <!--</a>-->
-          <!--</div>-->
+            </mat-card-content>
 
 
-          <!--<p data-dd-collapse-text="100" class="questionText"><b>Question: </b>{{r.question_txt}}</p>-->
-          <!--<p class="answerText"><b>Accepted Answer: </b> {{r.accepted_answer_txt}}</p>-->
 
-          <p #aatextContent id="read-more2">
+          <mat-card-content>
+          <p>
            <b> Answer: </b> {{r.accepted_answer_txt}}
           </p>
-          <!--<div class="read-more-link">-->
-            <!--<a readMore [readMore-length]="130" [readMore-element]="aatextContent">-->
-              <!--<span class="less">Less <i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
-              <!--<span class="more">More <i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
-            <!--</a>-->
-          <!--</div>-->
+          </mat-card-content>
+
 
           </mat-card>
         </div>
@@ -190,27 +181,20 @@
           <!--<b class="questionTitle">{{r.q_title}}</b>-->
 
             <!--<b>Question</b>-->
-            <p #qbtextContent id="read-more3">
+            <mat-card-content>
+            <p>
               <b> Question: </b> {{r.question_txt}}
             </p>
-            <!--<div class="read-more-link">-->
-              <!--<a readMore [readMore-length]="130" [readMore-element]="qbtextContent">-->
-                <!--<span class="less">Less <i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
-                <!--<span class="more">More <i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
-              <!--</a>-->
-            <!--</div>-->
+            </mat-card-content>
 
 
 
-            <p #abtextContent id="read-more4">
+            <mat-card-content>
+            <p>
               <b> Answer: </b> {{r.accepted_answer_txt}}
             </p>
-            <!--<div class="read-more-link">-->
-              <!--<a readMore [readMore-length]="130" [readMore-element]="abtextContent">-->
-                <!--<span class="less">Less <i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
-                <!--<span class="more">More <i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
-              <!--</a>-->
-            <!--</div>-->
+          </mat-card-content>
+
 
           </mat-card>
         </div>
